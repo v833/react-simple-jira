@@ -1,0 +1,41 @@
+name: NodeJS with Webpack
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Build
+        run: |
+          yarn install
+          REACT_APP_API_URL=/api yarn build
+      - name: GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v3.0.0
+        with:
+          # Git branch where site will be deployed
+          target_branch: gh-pages
+          # Build directory to deploy
+          build_dir: build
+          # Write the given domain name to the CNAME file
+          fqdn: jira.iknow.fun
+          # Prevent Jekyll from building the site
+          jekyll: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
