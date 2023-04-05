@@ -1,3 +1,4 @@
+import { AppProviders } from 'context'
 import { loadDevTools } from 'jira-dev-tool'
 import ReactDOM from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
@@ -9,7 +10,9 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 loadDevTools(() => {
   root.render(
     <HashRouter>
-      <App />
+      <AppProviders>
+        <App />
+      </AppProviders>
     </HashRouter>
   )
 })
