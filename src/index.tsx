@@ -3,8 +3,8 @@ import { loadDevTools } from 'jira-dev-tool'
 import ReactDOM from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
 import App from './App'
-import './index.css'
 import reportWebVitals from './reportWebVitals'
+import 'antd/dist/reset.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 loadDevTools(() => {

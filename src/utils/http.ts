@@ -4,11 +4,11 @@ import qs from 'qs'
 
 const apiUrl = process.env.REACT_APP_API_URL
 interface Config extends RequestInit {
-  data?: object
-  token?: string
+  data: object
+  token: string
 }
 
-export const http = async (endpoint: string, { data, token, headers, ...customConfig }: Config) => {
+export const http = async (endpoint: string, { data, token, headers, ...customConfig }: Partial<Config> = {}) => {
   const config = {
     method: 'GET',
     headers: {
