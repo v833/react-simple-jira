@@ -1,16 +1,17 @@
 import { AppProviders } from 'context'
-import { loadDevTools } from 'jira-dev-tool'
+import { loadServer, DevTools } from 'jira-dev-tool'
 import ReactDOM from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import 'antd/dist/reset.css'
+import 'antd/dist/antd.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
-loadDevTools(() => {
+loadServer(() => {
   root.render(
     <HashRouter>
       <AppProviders>
+        <DevTools />
         <App />
       </AppProviders>
     </HashRouter>

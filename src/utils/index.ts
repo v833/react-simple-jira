@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react'
 
 export const isFalsy = (value: unknown) => (value === 0 ? false : !value)
 // 在一个函数里，改变传入的对象本身是不好的
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const cleanObject = (obj: Record<string, any>) => {
+export const cleanObject = (obj: Record<string, unknown>) => {
   const result = { ...obj }
   Object.keys(obj).forEach((key) => {
     const value = obj[key]
