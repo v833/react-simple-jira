@@ -11,6 +11,7 @@
     "noFallthroughCasesInSwitch": true,
     "module": "commonjs", // ts-node
     "moduleResolution": "node",
+    "noImplicitAny": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,

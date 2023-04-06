@@ -1,10 +1,15 @@
 import { useAuth } from 'context/auth-context'
 import { Form, Input, Button } from 'antd'
 
-export const RegisterScreen = () => {
+export const RegisterScreen = ({ onError }: { onError: (err: Error) => void }) => {
   const { register } = useAuth()
   const handleSubmit = (values: { username: string; password: string }) => {
-    register(values)
+    try {
+      register(values)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      onError(e)
+    }
   }
   return (
     <Form onFinish={handleSubmit}>

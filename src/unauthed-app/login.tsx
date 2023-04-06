@@ -1,11 +1,17 @@
 import { useAuth } from 'context/auth-context'
 import { Form, Input, Button } from 'antd'
 
-export const LoginScreen = () => {
+export const LoginScreen = ({ onError }: { onError: (e: Error) => void }) => {
   const { login } = useAuth()
   const handleSubmit = (values: { username: string; password: string }) => {
-    login(values)
+    try {
+      login(values)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      onError(e)
+    }
   }
+
   return (
     <Form onFinish={handleSubmit}>
       <Form.Item name="username" rules={[{ required: true, message: '请输入用户名' }]}>
