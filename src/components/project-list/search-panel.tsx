@@ -1,7 +1,9 @@
-import { Form, Input, Select } from 'antd'
+import { Form, Input } from 'antd'
+import { IdSelect } from 'components/id-select'
+import { Project } from './list'
 
 export interface User {
-  id: string
+  id: number
   name: string
   email: string
   title: string
@@ -10,10 +12,7 @@ export interface User {
 }
 interface SearchPanelProps {
   users: User[]
-  param: {
-    name: string
-    personId: string
-  }
+  param: Pick<Project, 'name' | 'personId'>
   setParam: (param: SearchPanelProps['param']) => void
 }
 export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
@@ -33,21 +32,17 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
         />
       </Form.Item>
       <Form.Item>
-        <Select
+        <IdSelect
+          defaultOptionName="负责人"
+          options={users}
           value={param.personId}
           onChange={(value) =>
             setParam({
               ...param,
               personId: value,
             })
-          }>
-          <Select.Option value="">负责人</Select.Option>
-          {users.map((user) => (
-            <Select.Option value={user.id.toString()} key={user.id.toString()}>
-              {user.name}
-            </Select.Option>
-          ))}
-        </Select>
+          }
+        />
       </Form.Item>
     </Form>
   )

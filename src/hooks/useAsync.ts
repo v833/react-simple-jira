@@ -17,6 +17,8 @@ export const useAsync = <D>(initialState?: State<D>) => {
     ...defaultInitialState,
     ...initialState,
   })
+  // eslint-disable-next-line
+  const [retry, setRetry] = useState(() => () => {})
 
   const setData = (data: D) => {
     setState({
@@ -34,10 +36,15 @@ export const useAsync = <D>(initialState?: State<D>) => {
     })
   }
 
-  const run = async (promise: Promise<D>) => {
+  const run = async (promise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
     if (!promise || !promise.then) {
       throw new Error('请传入 Promise 类型数据')
     }
+    setRetry(() => () => {
+      if (runConfig?.retry) {
+        run(runConfig?.retry(), runConfig)
+      }
+    })
     setState({ ...state, stat: 'loading' })
     return promise
       .then((data) => {
@@ -58,6 +65,7 @@ export const useAsync = <D>(initialState?: State<D>) => {
     run,
     setData,
     setError,
+    retry,
     ...state,
   }
 }
