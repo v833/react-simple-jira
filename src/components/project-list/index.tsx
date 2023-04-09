@@ -6,15 +6,13 @@ import { useHttp } from 'utils/http'
 import styled from '@emotion/styled'
 import { Typography } from 'antd'
 import { useProjects } from 'utils/project'
+import { useUrlQueryParams } from 'utils/url'
 
 export const ProjectListScreen = () => {
-  const [param, setParam] = useState({
-    name: '',
-    personId: '',
-  })
+  const [param, setParam] = useUrlQueryParams(['name', 'personId'])
   const [users, setUsers] = useState([])
   const client = useHttp()
-  const { isError, error, isLoading, data: list } = useProjects(param)
+  const { isError, error, isLoading, data: list } = useProjects()
   useMount(() => {
     client('users').then(setUsers)
   })
@@ -27,6 +25,8 @@ export const ProjectListScreen = () => {
     </Container>
   )
 }
+
+ProjectListScreen.whyDidYouRender = true
 
 const Container = styled.div`
   padding: 3.2rem;

@@ -3,9 +3,11 @@ import { useAsync } from 'hooks/useAsync'
 import { useEffect } from 'react'
 import { cleanObject, useDebounce } from 'utils'
 import { useHttp } from './http'
+import { useUrlQueryParams } from './url'
 
-export const useProjects = (param: Partial<Project>) => {
+export const useProjects = () => {
   const { run, ...result } = useAsync<Project[]>()
+  const [param] = useUrlQueryParams(['name', 'personId'])
   const client = useHttp()
   const debouncedParam = useDebounce(param, 200)
   useEffect(() => {

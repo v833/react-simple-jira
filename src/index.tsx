@@ -1,7 +1,8 @@
+'./wdyr'
 import { AppProviders } from 'context'
 import { loadServer, DevTools } from 'jira-dev-tool'
 import ReactDOM from 'react-dom/client'
-import { HashRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import 'antd/dist/antd.css'
@@ -9,12 +10,12 @@ import 'antd/dist/antd.css'
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 loadServer(() => {
   root.render(
-    <HashRouter>
+    <BrowserRouter>
       <AppProviders>
         <DevTools />
         <App />
       </AppProviders>
-    </HashRouter>
+    </BrowserRouter>
   )
 })
 
