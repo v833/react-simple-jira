@@ -2,7 +2,7 @@ import { useAuth } from 'context/auth-context'
 import { ProjectListScreen } from 'components/project-list'
 import { Button, Dropdown, Menu } from 'antd'
 import styled from '@emotion/styled'
-import { Row } from 'components/lib'
+import { ButtonNoPadding, Row } from 'components/lib'
 import { Navigate, Route, Routes } from 'react-router'
 import { ProjectScreen } from 'components/project-screen'
 import { useState } from 'react'
@@ -13,10 +13,27 @@ export const AuthenticatedApp = () => {
   const [projectModalOpen, setProjectModalOpen] = useState(false)
   return (
     <div>
-      <PageHeader setProjectModalOpen={setProjectModalOpen} />
+      <PageHeader
+        projectButton={
+          <ButtonNoPadding onClick={() => setProjectModalOpen(true)} type="link">
+            创建项目
+          </ButtonNoPadding>
+        }
+      />
       <Main>
         <Routes>
-          <Route path={'/projects'} element={<ProjectListScreen setProjectModalOpen={setProjectModalOpen} />} />
+          <Route
+            path={'/projects'}
+            element={
+              <ProjectListScreen
+                projectButton={
+                  <ButtonNoPadding onClick={() => setProjectModalOpen(true)} type="link">
+                    创建项目
+                  </ButtonNoPadding>
+                }
+              />
+            }
+          />
           <Route path={'/projects/:projectId/*'} element={<ProjectScreen />} />
           <Route path={'/'} element={<Navigate to={'/projects'} replace={true} />} />
         </Routes>
@@ -26,14 +43,14 @@ export const AuthenticatedApp = () => {
   )
 }
 
-const PageHeader = (props: { setProjectModalOpen: (isOpen: boolean) => void }) => {
+const PageHeader = (props: { projectButton: JSX.Element }) => {
   return (
     <Header between>
       <HeaderLeft gap={2}>
         <Button type={'link'} onClick={resetRoute}>
           logo
         </Button>
-        <ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />
+        <ProjectPopover {...props} />
         <h2>用户</h2>
       </HeaderLeft>
       <HeaderRight>
