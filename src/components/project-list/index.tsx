@@ -4,11 +4,12 @@ import { SearchPanel } from './search-panel'
 import { useMount } from 'utils'
 import { useHttp } from 'utils/http'
 import styled from '@emotion/styled'
-import { Typography } from 'antd'
+import { Button, Typography } from 'antd'
 import { useProjects } from 'utils/project'
 import { useProjectsSearchParams } from './util'
+import { Row } from 'components/lib'
 
-export const ProjectListScreen = () => {
+export const ProjectListScreen = (props: { setProjectModalOpen: (isOpen: boolean) => void }) => {
   const [param, setParam] = useProjectsSearchParams()
   const [users, setUsers] = useState([])
   const client = useHttp()
@@ -18,10 +19,19 @@ export const ProjectListScreen = () => {
   })
   return (
     <Container>
-      <h1>项目列表</h1>
+      <Row between>
+        <h1>项目列表</h1>
+        <Button onClick={() => props.setProjectModalOpen(true)}>创建项目</Button>
+      </Row>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
       {isError ? <Typography.Text type="danger">{error?.message}</Typography.Text> : null}
-      <List refresh={retry} loading={isLoading} dataSource={list || []} users={users} />
+      <List
+        setProjectModalOpen={props.setProjectModalOpen}
+        refresh={retry}
+        loading={isLoading}
+        dataSource={list || []}
+        users={users}
+      />
     </Container>
   )
 }

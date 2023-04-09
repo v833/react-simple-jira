@@ -5,47 +5,57 @@ import styled from '@emotion/styled'
 import { Row } from 'components/lib'
 import { Navigate, Route, Routes } from 'react-router'
 import { ProjectScreen } from 'components/project-screen'
+import { useState } from 'react'
+import { ProjectModal } from 'components/project-list/project-modal'
+import { ProjectPopover } from 'components/project-popover'
 
 export const AuthenticatedApp = () => {
+  const [projectModalOpen, setProjectModalOpen] = useState(false)
   return (
     <div>
-      <PageHeader />
+      <PageHeader setProjectModalOpen={setProjectModalOpen} />
       <Main>
         <Routes>
-          <Route path={'/projects'} element={<ProjectListScreen />} />
+          <Route path={'/projects'} element={<ProjectListScreen setProjectModalOpen={setProjectModalOpen} />} />
           <Route path={'/projects/:projectId/*'} element={<ProjectScreen />} />
           <Route path={'/'} element={<Navigate to={'/projects'} replace={true} />} />
         </Routes>
       </Main>
+      <ProjectModal projectModalOpen={projectModalOpen} onClose={() => setProjectModalOpen(false)} />
     </div>
   )
 }
 
-const PageHeader = () => {
-  const { user, logout } = useAuth()
-
+const PageHeader = (props: { setProjectModalOpen: (isOpen: boolean) => void }) => {
   return (
     <Header between>
       <HeaderLeft gap={2}>
         <Button type={'link'} onClick={resetRoute}>
           logo
         </Button>
-        <h2>项目</h2>
+        <ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />
         <h2>用户</h2>
       </HeaderLeft>
       <HeaderRight>
-        <Dropdown
-          overlay={
-            <Menu>
-              <Menu.Item key="logout">
-                <a onClick={logout}>登出</a>
-              </Menu.Item>
-            </Menu>
-          }>
-          <a onClick={(e) => e.preventDefault()}>Hi, {user?.name}</a>
-        </Dropdown>
+        <User />
       </HeaderRight>
     </Header>
+  )
+}
+
+const User = () => {
+  const { user, logout } = useAuth()
+  return (
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item key="logout">
+            <a onClick={logout}>登出</a>
+          </Menu.Item>
+        </Menu>
+      }>
+      <a onClick={(e) => e.preventDefault()}>Hi, {user?.name}</a>
+    </Dropdown>
   )
 }
 
