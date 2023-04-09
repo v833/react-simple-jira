@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 import { useMountedRef } from './useMountedRef'
 
 interface State<D> {
@@ -13,17 +13,22 @@ const defaultInitialState: State<null> = {
   error: null,
 }
 
+const useSafeDispatch = <T>(dispatch: (...args: T[]) => void) => {
+  const mountedRef = useMountedRef()
+  return (...args: T[]) => (mountedRef.current ? dispatch(...args) : void 0)
+}
+
 export const useAsync = <D>(initialState?: State<D>) => {
-  const [state, setState] = useState<State<D>>({
+  const [state, dispatch] = useReducer((state: State<D>, action: Partial<State<D>>) => ({ ...state, ...action }), {
     ...defaultInitialState,
     ...initialState,
   })
-  const mountedRef = useMountedRef()
+  const safeDispatch = useSafeDispatch(dispatch)
   // eslint-disable-next-line
   const [retry, setRetry] = useState(() => () => {})
 
   const setData = (data: D) => {
-    setState({
+    safeDispatch({
       data,
       stat: 'success',
       error: null,
@@ -31,7 +36,7 @@ export const useAsync = <D>(initialState?: State<D>) => {
   }
 
   const setError = (error: Error) => {
-    setState({
+    safeDispatch({
       data: null,
       stat: 'error',
       error,
@@ -47,13 +52,11 @@ export const useAsync = <D>(initialState?: State<D>) => {
         run(runConfig?.retry(), runConfig)
       }
     })
-    setState({ ...state, stat: 'loading' })
+    safeDispatch({ ...state, stat: 'loading' })
     return promise
       .then((data) => {
-        if (mountedRef.current) {
-          setData(data)
-          return data
-        }
+        setData(data)
+        return data
       })
       .catch((err) => {
         setError(err)
