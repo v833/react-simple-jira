@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import { Pin } from 'components/pin'
 import { useEditProject } from 'utils/project'
 import { ButtonNoPadding } from 'components/lib'
+import { openProjectModal } from './project-list.slice'
+import { useDispatch } from 'react-redux'
 
 export interface Project {
   id: number
@@ -21,6 +23,7 @@ interface ListProps extends TableProps<Project> {
 }
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject()
+  const dispatch = useDispatch()
 
   return (
     <Table
@@ -65,7 +68,11 @@ export const List = ({ users, ...props }: ListProps) => {
               <Dropdown
                 overlay={
                   <Menu>
-                    <Menu.Item key="edit">{props.projectButton}</Menu.Item>
+                    <Menu.Item key="edit">
+                      <ButtonNoPadding onClick={() => dispatch(openProjectModal())} type="link">
+                        编辑
+                      </ButtonNoPadding>
+                    </Menu.Item>
                   </Menu>
                 }>
                 <ButtonNoPadding type="link">...</ButtonNoPadding>
