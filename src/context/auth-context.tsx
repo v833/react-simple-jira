@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     user,
     login,
     register,
-    logout,
+    logout
   }
 
   useMount(() => {

@@ -13,7 +13,7 @@ export const useProjects = () => {
   const fetchProjects = () => client('projects', { data: cleanObject(debouncedParam) })
   useEffect(() => {
     run(fetchProjects(), {
-      retry: fetchProjects,
+      retry: fetchProjects
     })
     // eslint-disable-next-line
   }, [debouncedParam])
@@ -30,7 +30,7 @@ export const useEditProject = () => {
 
   return {
     mutate,
-    ...asyncResult,
+    ...asyncResult
   }
 }
 
@@ -43,6 +43,6 @@ export const useAddProject = () => {
 
   return {
     mutate,
-    ...asyncResult,
+    ...asyncResult
   }
 }

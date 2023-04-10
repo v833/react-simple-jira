@@ -45,6 +45,6 @@ export const useArray = <T>(initialArray: T[]) => {
       const copy = [...value]
       copy.splice(index, 1)
       setValue(copy)
-    },
+    }
   }
 }

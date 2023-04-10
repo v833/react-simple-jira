@@ -32,7 +32,7 @@ module.exports = {
   },
   rules: {
     // 自定义的一些规则: 0 关闭 1 警告 2 错误
-    'prettier/prettier': 1,
+    'prettier/prettier': 0,
     'linebreak-style': [2, 'unix'],
     'react-hooks/rules-of-hooks': 2,
     'react-hooks/exhaustive-deps': 1,

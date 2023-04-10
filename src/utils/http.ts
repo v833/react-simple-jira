@@ -13,9 +13,9 @@ export const http = async (endpoint: string, { data, token, headers, ...customCo
     method: 'GET',
     headers: {
       Authorization: token ? `Bearer ${token}` : '',
-      'Content-Type': data ? 'application/json' : '',
+      'Content-Type': data ? 'application/json' : ''
     },
-    ...customConfig,
+    ...customConfig
   }
 
   if (config.method.toUpperCase() === 'GET') {
