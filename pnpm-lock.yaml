@@ -79,6 +79,7 @@ specifiers:
   react-router: ^6.10.0
   react-router-dom: ^6.10.0
   react-table: ^7.8.0
+  redux-thunk: ^2.4.2
   resolve: ^1.20.0
   resolve-url-loader: ^4.0.0
   sass-loader: ^12.3.0
@@ -117,6 +118,7 @@ dependencies:
   react-router: registry.npmmirror.com/react-router/6.10.0_react@18.2.0
   react-router-dom: registry.npmmirror.com/react-router-dom/6.10.0_react-dom@18.2.0+react@18.2.0
   react-table: registry.npmmirror.com/react-table/7.8.0_react@18.2.0
+  redux-thunk: registry.npmmirror.com/redux-thunk/2.4.2
   styled-components: registry.npmmirror.com/styled-components/5.3.9_react-dom@18.2.0+react@18.2.0
 
 devDependencies:
@@ -14119,6 +14121,14 @@ packages:
       indent-string: registry.npmmirror.com/indent-string/4.0.0
       strip-indent: registry.npmmirror.com/strip-indent/3.0.0
     dev: true
+
+  registry.npmmirror.com/redux-thunk/2.4.2:
+    resolution: {integrity: sha512-+P3TjtnP0k/FEjcBL5FZpoovtvrTNT/UXd4/sluaSyrURlSlhLSzEdfsTBW7WsKB6yPvgd7q/iZPICFjW4o57Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/redux-thunk/-/redux-thunk-2.4.2.tgz}
+    name: redux-thunk
+    version: 2.4.2
+    peerDependencies:
+      redux: ^4
+    dev: false
 
   registry.npmmirror.com/redux-thunk/2.4.2_redux@4.2.1:
     resolution: {integrity: sha512-+P3TjtnP0k/FEjcBL5FZpoovtvrTNT/UXd4/sluaSyrURlSlhLSzEdfsTBW7WsKB6yPvgd7q/iZPICFjW4o57Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/redux-thunk/-/redux-thunk-2.4.2.tgz}

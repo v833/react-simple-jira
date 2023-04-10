@@ -6,13 +6,13 @@ import { User } from 'types/User'
 import { http } from 'utils/http'
 import * as auth from '../auth-provider'
 
-interface AuthForm {
+export interface AuthForm {
   username: string
   password: string
 }
 
 // 初始化用户
-const bootstrapUser = async () => {
+export const bootstrapUser = async () => {
   let user = null
   const token = auth.getToken()
   if (token) {
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     user,
     login,
     register,
-    logout,
+    logout
   }
 
   useMount(() => {
