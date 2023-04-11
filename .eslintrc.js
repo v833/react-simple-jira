@@ -6,31 +6,32 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier',
     'react-app',
-    'react-app/jest',
+    'react-app/jest'
   ], // 定义文件继承的子规范
   plugins: ['react-hooks', 'eslint-plugin-react', 'react', 'prettier', 'html'], // 定义了该eslint文件所依赖的插件
   env: {
     // 指定代码的运行环境
     browser: true,
     node: true,
-    es2021: true,
+    es2021: true
   },
   settings: {
     // 自动发现React的版本，从而进行规范react代码
     react: {
       pragma: 'React',
-      version: 'detect',
-    },
+      version: 'detect'
+    }
   },
   parserOptions: {
     // 指定ESLint可以解析JSX语法
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
     ecmaVersion: 'latest',
-    sourceType: 'module',
+    sourceType: 'module'
   },
   rules: {
+    '@typescript-eslint/ban-ts-comment': 0,
     // 自定义的一些规则: 0 关闭 1 警告 2 错误
     'prettier/prettier': 0,
     'linebreak-style': [2, 'unix'],
@@ -42,12 +43,12 @@ module.exports = {
     'valid-typeof': [
       1,
       {
-        requireStringLiterals: false,
-      },
+        requireStringLiterals: false
+      }
     ],
     sime: 0,
     '@typescript-eslint/no-var-requires': 0,
     'react/prop-types': 0,
-    'jsx-a11y/anchor-is-valid': 0,
-  },
+    'jsx-a11y/anchor-is-valid': 0
+  }
 }

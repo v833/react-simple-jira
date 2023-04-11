@@ -1,6 +1,6 @@
 import { Form, Input } from 'antd'
 import { IdSelect } from 'components/id-select'
-import { Project } from './list'
+import { Project } from './Project'
 
 export interface User {
   id: number
@@ -26,7 +26,7 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
           onChange={(e) =>
             setParam({
               ...param,
-              name: e.target.value,
+              name: e.target.value
             })
           }
         />
@@ -39,7 +39,7 @@ export const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
           onChange={(value) =>
             setParam({
               ...param,
-              personId: value,
+              personId: value
             })
           }
         />

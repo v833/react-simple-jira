@@ -6,15 +6,8 @@ import { Pin } from 'components/pin'
 import { useEditProject } from 'utils/project'
 import { ButtonNoPadding } from 'components/lib'
 import { useProjectModal } from './util'
+import { Project } from './Project'
 
-export interface Project {
-  id: number
-  name: string
-  personId: number | undefined
-  pin: boolean
-  organization: string
-  created: number
-}
 interface ListProps extends TableProps<Project> {
   users: User[]
   refresh?: () => void
@@ -24,7 +17,7 @@ export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject()
   // const { open } = useProjectModal()
   const { startEdit } = useProjectModal()
-  const editProject = (id: number) => (pin: boolean) => mutate({ id, pin })
+  // const editProject = (id: number) => (pin: boolean) => mutate({ id, pin })
 
   return (
     <Table

@@ -1,4 +1,5 @@
-import { Project } from 'components/project-list/list'
+import { Project } from 'components/project-list/Project'
+import { useProjectsSearchParams } from 'components/project-list/util'
 // import { useAsync } from 'hooks/useAsync'
 // import { useEffect } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
@@ -13,20 +14,12 @@ export const useProjects = () => {
   const debouncedParam = useDebounce(param, 200)
 
   return useQuery<Project[], Error>(['project', param], () => client('projects', { data: cleanObject(debouncedParam) }))
-
-  // const fetchProjects = () => client('projects', { data: cleanObject(debouncedParam) })
-  // useEffect(() => {
-  //   run(fetchProjects(), {
-  //     retry: fetchProjects
-  //   })
-  //   // eslint-disable-next-line
-  // }, [debouncedParam])
-  // return result
 }
 export const useEditProject = () => {
-  // const { run, ...asyncResult } = useAsync<Project>()
   const client = useHttp()
   const queryClient = useQueryClient()
+  const [searchParams] = useProjectsSearchParams()
+  const queryKey = ['projects', searchParams]
 
   return useMutation(
     (params: Partial<Project>) => {
@@ -34,18 +27,21 @@ export const useEditProject = () => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('projects')
+        return queryClient.invalidateQueries(queryKey)
+      },
+      async onMutate(target) {
+        const previousItem = queryClient.getQueryData<Project[]>(queryKey)
+        // @ts-ignore
+        queryClient.setQueryData(queryKey, (old?: Project[]) => {
+          return old?.map((project) => (project.id === target.id ? { ...project, ...target } : project))
+        })
+        return { previousItem }
+      },
+      onError(error, newItem, context) {
+        queryClient.setQueryData(queryKey, context?.previousItem)
       }
     }
   )
-  // const mutate = (params: Partial<Project>) => {
-  //   return run(client(`projects/${params.id}`, { data: params, method: 'PATCH' }))
-  // }
-
-  // return {
-  //   mutate,
-  //   ...asyncResult
-  // }
 }
 
 export const useAddProject = () => {
