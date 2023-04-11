@@ -13,7 +13,7 @@ export const ProjectListScreen = () => {
   const [param, setParam] = useProjectsSearchParams()
   const [users, setUsers] = useState([])
   const client = useHttp()
-  const { isError, error, isLoading, data: list, retry } = useProjects()
+  const { isError, error, isLoading, data: list } = useProjects()
   useMount(() => {
     client('users').then(setUsers)
   })
@@ -27,8 +27,8 @@ export const ProjectListScreen = () => {
         </ButtonNoPadding>
       </Row>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
-      {isError ? <Typography.Text type="danger">{error?.message}</Typography.Text> : null}
-      <List refresh={retry} loading={isLoading} dataSource={list || []} users={users} />
+      {isError ? <Typography.Text type="danger">{error.message}</Typography.Text> : null}
+      <List loading={isLoading} dataSource={list || []} users={users} />
     </Container>
   )
 }
